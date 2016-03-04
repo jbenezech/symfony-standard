@@ -5,17 +5,21 @@ namespace AppBundle\Controller;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use FOS\RestBundle\Controller\FOSRestController;
+use AppBundle\Entity\Entity;
 
-class DefaultController extends Controller
+class DefaultController extends FOSRestController
 {
     /**
-     * @Route("/", name="homepage")
+     * @Route("/", name="homepage", defaults={"_format": "json"})
      */
     public function indexAction(Request $request)
     {
-        // replace this example code with whatever you need
-        return $this->render('default/index.html.twig', [
-            'base_dir' => realpath($this->getParameter('kernel.root_dir').'/..'),
-        ]);
+        $entity = new Entity(1);
+        return $this->handleView(
+            $this->view(
+                $entity
+            )
+        );
     }
 }
